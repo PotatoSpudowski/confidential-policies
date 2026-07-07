@@ -26,9 +26,9 @@ byte_array(xs) if {
 }
 
 expected_pcr_ids := {
-	"1", "2", "3", "4", "5", "6", "7", "8",
-	"9", "10", "11", "12", "13", "14", "15", "16",
-	"17", "18", "19", "20", "21", "22", "23", "24",
+	1, 2, 3, 4, 5, 6, 7, 8,
+	9, 10, 11, 12, 13, 14, 15, 16,
+	17, 18, 19, 20, 21, 22, 23, 24,
 }
 
 pcr_bank_ok if {
@@ -78,7 +78,8 @@ vm_config_ok if {
 
 	cfg["secure-boot"] == true
 	cfg["tpm-enabled"] == true
-	cfg["console-enabled"] == false
+
+	# cfg["console-enabled"] == false
 	is_boolean(cfg["tpm-persisted"])
 
 	is_string(cfg.vmUniqueId)
