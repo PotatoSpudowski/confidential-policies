@@ -57,9 +57,9 @@ import rego.v1
 # Reference values
 # ---------------------------------------------------------------------------
 # Baseline captured from a known-good TD (Azure TDX host, July 2026). Each
-# entry may also be supplied out-of-band via `data.tdx.reference.<field>`
-# (reticle loads data JSON files alongside policies), which takes precedence
-# over the inline value.
+# entry may also be supplied out-of-band via a data JSON file loaded alongside
+# the policies, shaped as {"reference_values": {"tdx": {"<field>": ...}}},
+# which takes precedence over the inline value.
 #
 # Hex fields are compared case-insensitively. Any reference field left as its
 # empty default (empty string / empty array) is treated as "don't care" and
@@ -114,8 +114,14 @@ inline_reference := {
 	"xfam_allowed": [231, 2, 6, 0, 0, 0, 0, 0],
 }
 
-# path-based lookup so this is safe even when no `data.tdx` document is loaded
-data_reference := object.get(data, ["tdx", "reference"], {})
+# Out-of-band overrides live OUTSIDE this package's namespace: referencing
+# `data` as a whole (e.g. object.get(data, [...], {})) or `data.tdx.*` would
+# make these rules depend on every policy in the bundle, including this one —
+# a rego_recursion_error. The `default` rule keeps this safe when no data
+# document is loaded.
+default data_reference := {}
+
+data_reference := data.reference_values.tdx
 
 # ---------------------------------------------------------------------------
 # Top-level decision
