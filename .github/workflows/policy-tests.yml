@@ -1,0 +1,17 @@
+name: Policy tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: open-policy-agent/setup-opa@v2
+        with:
+          version: 1.21.1
+      - run: opa check .
+      - run: opa test tdx/policy.rego tdx/profiles/gke-c3-cos.json tests -v
