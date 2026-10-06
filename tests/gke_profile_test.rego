@@ -17,6 +17,11 @@ test_wrong_owner_rejected if {
 	not data.tdx.allow with input as altered
 }
 
+test_previous_node_owner_rejected if {
+	altered := object.union(quote, {"mrowner": "cc072416fb871191d450742adcef3ed548a17293d1f5d9dd02e8c1ce240129f20d411d99c7bf91c128dba6d10fdb7231"})
+	not data.tdx.allow with input as altered
+}
+
 test_wrong_boot_rejected if {
 	altered := object.union(quote, {"mrtd": "bad"})
 	not data.tdx.allow with input as altered

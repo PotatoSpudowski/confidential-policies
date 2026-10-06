@@ -2,7 +2,12 @@
 
 `gke-c3-cos.json` is an opt-in node-level PoC profile captured from a C3 Intel
 TDX Confidential GKE node running COS_CONTAINERD / GKE 1.35.6-gke.1250000 on
-October 2, 2026. It pins firmware/boot measurements, owner, attributes and the
+October 2, 2026, with the owner reference refreshed on October 7 after the
+development node was recreated on October 5. Authenticated cloud inventory
+confirmed the replacement C3/TDX instance, and a fresh quote matched the original
+firmware, TDX module, RTMRs and security-version values. Only the exact owner
+reference changed. The live broker must still verify signatures, freshness and
+policy before release. It pins firmware/boot measurements, owner, attributes and the
 TDX module. A different node image or boot configuration must be revalidated;
 this is not a wildcard for all Google Cloud nodes.
 
