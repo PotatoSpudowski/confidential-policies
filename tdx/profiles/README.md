@@ -1,15 +1,17 @@
 # GKE C3 / COS TDX reference profile
 
-`gke-c3-cos.json` is an opt-in node-level PoC profile captured from a C3 Intel
-TDX Confidential GKE node running COS_CONTAINERD / GKE 1.35.6-gke.1250000 on
-October 2, 2026, with the owner reference refreshed on October 7 after the
-development node was recreated on October 5. Authenticated cloud inventory
-confirmed the replacement C3/TDX instance, and a fresh quote matched the original
-firmware, TDX module, RTMRs and security-version values. Only the exact owner
-reference changed. The live broker must still verify signatures, freshness and
-policy before release. It pins firmware/boot measurements, owner, attributes and the
-TDX module. A different node image or boot configuration must be revalidated;
-this is not a wildcard for all Google Cloud nodes.
+`gke-c3-cos.json` is an opt-in node-level PoC profile for the dedicated C3
+Intel TDX Confidential GKE dev node. On October 28, 2026, the dev baseline
+was refreshed for COS_CONTAINERD / GKE 1.35.8-gke.1439001 after its node upgrade.
+A fresh quote passed signature, collateral/TCB and nonce verification, then
+matched this explicit profile. RTMR1 and RTMR2 changed from the prior 1.35.6
+baseline; firmware, TDX module and owner references stayed unchanged.
+
+This update is limited to the dev profile. It does not approve a production
+router image or change the default policy. A different image or boot
+configuration must be revalidated; this is not a wildcard for Google Cloud
+nodes. The live broker still verifies signatures, freshness and the explicit
+profile before releasing a short-lived key lease.
 
 Set Reticle’s policy-provider base URL to
 `https://policies.prem.io/gke-c3-cos/` to select `gke-c3-cos/policies.json`.
